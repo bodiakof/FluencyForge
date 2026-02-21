@@ -16,5 +16,6 @@ create table cards (
     difficulty_level int,
     constraint fk_cards_deck
         foreign key (deck_id)
-        references decks(deck_id)
+        references decks(deck_id),
+    constraint uq_card_front_deck unique (front_text, deck_id)
 );
