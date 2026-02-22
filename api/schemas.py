@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import date
 
+
 class CardResponse(BaseModel):
     card_id: int
     deck_id: int
