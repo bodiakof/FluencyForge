@@ -13,7 +13,7 @@ create table cards (
     card_id int primary key identity(1,1),
     deck_id int not null,
     front_text nvarchar(255) not null,
-    back_text nvarchar(max)
+    back_text nvarchar(max),
 
     ease_factor float not null default 2.5,
     repetition_count int not null default 0,
