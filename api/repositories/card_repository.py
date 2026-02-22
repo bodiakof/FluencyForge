@@ -17,8 +17,12 @@ class CardRepository:
         """, limit)
 
         rows = cursor.fetchall()
+
+        columns = [column[0] for column in cursor.description]
+        results = [dict(zip(columns, row)) for row in rows]
+
         conn.close()
-        return rows
+        return results
 
     def get_due_cards(self, limit: int):
         conn = get_connection()
@@ -33,8 +37,12 @@ class CardRepository:
         """, limit)
 
         rows = cursor.fetchall()
+        
+        columns = [column[0] for column in cursor.description]
+        results = [dict(zip(columns, row)) for row in rows]
+
         conn.close()
-        return rows
+        return results
 
     def get_total_cards(self):
         conn = get_connection()
