@@ -18,6 +18,25 @@ CARD_PATTERN = re.compile(
 )
 
 
+def clean_back_text(text: str) -> str:
+    # Remove HTML line breaks
+    text = re.sub(r"<br\s*/?>", " ", text)
+
+    # Remove markdown italics: _text_ → text
+    text = re.sub(r"_([^_]+)_", r"\1", text)
+    
+    # Remove markdown italics: *text* → text
+    text = re.sub(r"\*([^*]+)\*", r"\1", text)
+
+    # Replace multiple newlines with space
+    text = re.sub(r"\s*\n\s*", " ", text)
+
+    # Collapse multiple spaces
+    text = re.sub(r"\s{2,}", " ", text)
+
+    return text.strip()
+
+
 def extract_cards(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
@@ -26,7 +45,8 @@ def extract_cards(filepath):
 
     cards = []
     for front, back in matches:
-        cards.append((front.strip(), back.strip()))
+        clean_back = clean_back_text(back)
+        cards.append((front.strip(), clean_back))
 
     return cards
 
